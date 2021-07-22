@@ -12,6 +12,6 @@ export class CustomerController {
 
     @Get()
     async getResult(): Promise<any> {
-        await this.bus.publish("Olá");
+        await this.bus.publish("customer-events", "Olá");
     }
 }

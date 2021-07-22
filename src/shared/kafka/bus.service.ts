@@ -4,16 +4,19 @@ import { KafkaConnection } from "./kafka.connection";
 @Injectable()
 export class BusService {
 
-    constructor(
-        private topic: string,
-        private kafka: KafkaConnection) { }
+    private kafka: KafkaConnection
 
-    async publish(message: any) {
+    constructor(
+        kafka: KafkaConnection) {
+        this.kafka = kafka;
+    }
+
+    async publish(topic: string, message: any) {
         // TODO verifier if can use the same producer connect 
         const producer = this.kafka.getConnection().producer();
         await producer.connect()
         await producer.send({
-            topic: this.topic,
+            topic: topic,
             messages: [
                 { value: message }
             ],

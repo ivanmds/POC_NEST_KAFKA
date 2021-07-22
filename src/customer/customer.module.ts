@@ -1,10 +1,8 @@
 import { Module } from "@nestjs/common";
-import { KafkaConnection } from "src/shared/kafka/kafka.connection";
-import { BusService } from "../shared/kafka/bus.service";
-import { CustomerConsumer } from "./consumers/customer.consumer";
 import { CustomerController } from "./customer.controller";
-import { CustomerRepository } from "./customer.repository";
-import { CustomerService } from "./customer.service";
+import { CustomerConsumer } from "./consumers/customer.consumer";
+import { KafkaConnection } from "../shared/kafka/kafka.connection";
+import { BusService } from "../shared/kafka/bus.service";
 
 var customerConsumerProvider = {
     provide: "CUSTOMER_CONSUMER",
@@ -19,6 +17,6 @@ var customerConsumerProvider = {
 
 @Module({
     controllers: [CustomerController],
-    providers: [CustomerRepository, CustomerService, KafkaConnection, BusService, customerConsumerProvider]
+    providers: [KafkaConnection,BusService, customerConsumerProvider]
 })
 export class CustomerModule { }

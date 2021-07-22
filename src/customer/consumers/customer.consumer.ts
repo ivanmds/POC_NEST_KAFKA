@@ -1,5 +1,5 @@
-import { ConsumerBase } from "src/shared/kafka/consumer.base";
-import { KafkaConnection } from "src/shared/kafka/kafka.connection";
+import { ConsumerBase } from "..//..//shared/kafka/consumer.base";
+import { KafkaConnection } from "..//..//shared/kafka/kafka.connection";
 
 export class CustomerConsumer extends ConsumerBase {
    
