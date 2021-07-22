@@ -21,7 +21,7 @@ export abstract class ConsumerBase {
                     value: message.value.toString(),
                 });
 
-                this.do(JSON.parse(message.value.toString()));
+                this.do(message.value.toString());
             },
         })
     }
