@@ -1,7 +1,17 @@
-import { Controller } from "@nestjs/common";
-import { CustomerService } from "./customer.service";
+import { Controller, Get } from "@nestjs/common";
+import { BusService } from "../shared/kafka/bus.service";
 
-@Controller()
+@Controller('customers')
 export class CustomerController {
-    constructor(private service: CustomerService) { }
+
+    private bus: BusService;
+
+    constructor(bus: BusService) { 
+        this.bus = bus;
+    }
+
+    @Get()
+    async getResult(): Promise<any> {
+        await this.bus.publish("Olá");
+    }
 }
