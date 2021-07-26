@@ -12,7 +12,7 @@ export class BusService {
     }
 
     async publish(topic: string, message: any) {
-        // TODO verifier if can use the same producer connect 
+        
         const producer = this.kafka.getConnection().producer();
         await producer.connect()
         await producer.send({
