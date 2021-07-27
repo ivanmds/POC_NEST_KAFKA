@@ -1,8 +1,10 @@
 import { Body, Controller, Get, NotFoundException, Param, Post } from "@nestjs/common";
 import { ApiHeader, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { BusService } from "../shared/kafka/bus.service";
-import { CustomerCreated } from "./dtos/customer.created";
-import { CustomerDto } from "./dtos/customer.dto";
+import { CustomerCreated } from "./events/customer.created";
+import { CustomerToCreate } from "./commands/customer.tocreate";
+import { CustomerListed } from "./events/customer.listed";
+import { v4 as uuidv4 } from 'uuid';
 
 @ApiTags('customers')
 @Controller('customers')
@@ -16,18 +18,24 @@ export class CustomerController {
 
     @Get(':id')
     @ApiHeader({ name: 'x-correlation', description: 'id to correlation process' })
-    @ApiResponse({ status: 200, description: 'success' })
+    @ApiResponse({ status: 200, description: 'success', type: CustomerListed })
     @ApiResponse({ status: 400, description: 'not found' })
-    async get(@Param('id') id: string): Promise<CustomerDto> {
-        await this.bus.publish("customer-events", "Olá");
+    async get(@Param('id') id: string): Promise<CustomerListed> {
+        //await this.bus.publish("customer-events", "Olá");
 
         throw new NotFoundException('Customer not found');
     }
 
     @Post()
-    async post(@Body() customer: CustomerDto): Promise<CustomerCreated> {
+    @ApiResponse({ status: 201, description: 'created',  type: CustomerCreated })
+    async post(@Body() customer: CustomerToCreate): Promise<CustomerCreated> {
+        
+        var customerCreated = new CustomerCreated();
+        Object.assign(customerCreated, customer);
+        customerCreated.id = uuidv4();
 
+        await this.bus.publish("customer-events", customerCreated);
 
-        return null;
+        return customerCreated;
     }
 }

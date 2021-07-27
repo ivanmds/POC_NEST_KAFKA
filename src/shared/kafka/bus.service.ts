@@ -13,12 +13,14 @@ export class BusService {
 
     async publish(topic: string, message: any) {
         
+        var messageJson = JSON.stringify(message);
+
         const producer = this.kafka.getConnection().producer();
         await producer.connect()
         await producer.send({
             topic: topic,
             messages: [
-                { value: message }
+                { value: messageJson }
             ],
         });
     }

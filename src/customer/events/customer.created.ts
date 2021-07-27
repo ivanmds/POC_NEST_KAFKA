@@ -1,4 +1,4 @@
-import { CustomerDto } from "./customer.dto";
+import { CustomerDto } from "../dtos/customer.dto";
 
 export class CustomerCreated extends CustomerDto {
    

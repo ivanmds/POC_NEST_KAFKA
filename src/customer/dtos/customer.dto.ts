@@ -32,6 +32,10 @@ export class EmailDto {
 
 
 export class CustomerDto {
+
+    @ApiProperty()
+    id: string;
+
     @ApiProperty()
     companyKey: string;
 
