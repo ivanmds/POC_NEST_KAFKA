@@ -1,9 +1,9 @@
 import { Body, Controller, Get, NotFoundException, Param, Post } from "@nestjs/common";
 import { ApiHeader, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { BusService } from "../shared/kafka/bus.service";
-import { CustomerCreated } from "./events/customer.created";
-import { CustomerToCreate } from "./commands/customer.tocreate";
-import { CustomerListed } from "./events/customer.listed";
+import { CustomerCreated } from "./dtos/events/customer.created";
+import { CustomerToCreate } from "./dtos/commands/customer.tocreate";
+import { CustomerListed } from "./dtos/events/customer.listed";
 import { v4 as uuidv4 } from 'uuid';
 
 @ApiTags('customers')
